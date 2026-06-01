@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ED IV Meds</title>
+    <meta name="description" content="Bedside clinical tool for Emergency Department IV medication reference and infusion calculations.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+    <!-- Modern Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app" class="app-container">
+        
+        <!-- Search / Home View -->
+        <main id="home-view" class="view active">
+            <div class="sticky-top-container">
+                <header class="app-header">
+                    <div class="header-title">ED IV Meds</div>
+                </header>
+
+                <div class="search-container" style="padding-top: var(--spacing-sm);">
+                    <div class="search-input-wrapper">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="search-input" placeholder="Search medications..." autocomplete="off" spellcheck="false">
+                        <button id="clear-search" class="icon-btn hidden" aria-label="Clear search">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Home Default Content -->
+            <div id="home-default-content" class="scroll-content">
+                <section class="home-section">
+                    <div class="section-header">
+                        <h2>QUICK ACTIONS (FAVORITES)</h2>
+                        <button class="btn-link" id="home-see-all-favorites">Edit</button>
+                    </div>
+                    <div id="quick-actions-container" class="quick-actions-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <section class="home-section">
+                    <div class="section-header">
+                        <h2>RECENTLY VIEWED</h2>
+                        <button class="btn-link hidden" id="home-view-all-recents">View all recents</button>
+                    </div>
+                    <div id="recents-list" class="list-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Search Results Content -->
+            <div id="search-results-content" class="scroll-content hidden">
+                <div id="search-results-list" class="list-container">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Sticky Patient Bar (Bottom) -->
+            <div class="patient-bar">
+                <div class="patient-info">
+                    <svg class="patient-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span>Patient Weight: <strong class="patient-weight-display">--</strong></span>
+                </div>
+                <button class="edit-weight-btn-simple">Edit</button>
+            </div>
+        </main>
+
+        <!-- Drug Detail View -->
+        <main id="drug-detail-view" class="view hidden">
+            <div class="sticky-top-container">
+                <!-- Row 1: Header -->
+                <header class="detail-header">
+                    <button id="back-btn" class="icon-btn" aria-label="Back">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    </button>
+                    <div class="header-title" id="detail-title-name">Medication Name</div>
+                    <button id="favorite-btn" class="icon-btn" aria-label="Toggle Favorite">
+                        <svg class="star-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </button>
+                </header>
+                <!-- Row 2: Patient Weight — STICKY, at top -->
+                <div class="detail-weight-bar" id="inline-weight-trigger">
+                    <div class="detail-weight-info">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;flex-shrink:0;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>Patient Weight</span>
+                        <strong class="patient-weight-display detail-weight-value">-- kg</strong>
+                    </div>
+                    <button class="edit-weight-btn-simple" aria-label="Edit patient weight">Edit</button>
+                </div>
+                <!-- Row 3: Safety + category + disclaimer -->
+                <div class="drug-identity-bar">
+                    <span class="drug-category-label" id="detail-category-text">Vasopressor</span>
+                    <div id="safety-badges" class="safety-badges-inline"><!-- JS --></div>
+                    <span class="detail-disclaimer-badge" title="Always verify against local protocols, patient-specific factors, and current clinical judgement.">⚠ Verify</span>
+                </div>
+            </div>
+
+            <div class="scroll-content detail-scroll">
+
+                <!-- === PREPARATION CARD (full detail, tappable) === -->
+                <div class="prep-detail-card">
+                    <div class="prep-card-top-row" id="open-prep-selector-btn">
+                        <div class="prep-card-name-group">
+                            <span class="prep-card-name" id="summary-prep-label">Single Strength</span>
+                            <span id="active-prep-warning" class="prep-nondefault-badge hidden">⚠ Non-standard</span>
+                            <span id="active-prep-default-badge" class="prep-default-badge">✓ Recommended</span>
+                        </div>
+                        <div class="prep-card-change">
+                            Change
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </div>
+
+                    <div class="prep-card-desc" id="summary-prep-desc">4mg in 50ml Dextrose 5%</div>
+
+                    <!-- High concentration warning -->
+                    <div id="high-conc-warning" class="high-conc-warning hidden">
+                        ⚠ High concentration — use only when clinically appropriate and according to local protocol
+                    </div>
+
+                    <!-- Preparation data grid -->
+                    <div class="prep-data-grid">
+                        <div class="prep-data-item">
+                            <div class="prep-data-label">Ampoules</div>
+                            <div class="prep-data-value" id="prep-ampoule-count">--</div>
+                            <div class="prep-data-sub" id="prep-ampoule-strength">--</div>
+                        </div>
+                        <div class="prep-data-item">
+                            <div class="prep-data-label">Drug Volume</div>
+                            <div class="prep-data-value" id="prep-med-volume">-- ml</div>
+                        </div>
+                        <div class="prep-data-item">
+                            <div class="prep-data-label">Diluent</div>
+                            <div class="prep-data-value" id="prep-diluent-name">--</div>
+                        </div>
+                        <div class="prep-data-item">
+                            <div class="prep-data-label">Diluent Volume</div>
+                            <div class="prep-data-value" id="prep-diluent-volume">-- ml</div>
+                        </div>
+                        <div class="prep-data-item">
+                            <div class="prep-data-label">Final Volume</div>
+                            <div class="prep-data-value" id="prep-final-volume">-- ml</div>
+                        </div>
+                        <div class="prep-data-item">
+                            <div class="prep-data-label">Concentration</div>
+                            <div class="prep-data-value conc-highlight" id="summary-prep-conc">-- mcg/ml</div>
+                        </div>
+                    </div>
+
+                    <!-- Preparation Steps (expandable) -->
+                    <details class="prep-steps-drawer" id="prep-steps-drawer">
+                        <summary class="prep-steps-toggle">
+                            Preparation Steps
+                            <svg class="drawer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;margin-left:auto;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <ol class="prep-steps-list" id="prep-steps-list">
+                            <!-- populated by JS -->
+                        </ol>
+                    </details>
+                </div>
+
+                <!-- === DOSE TABLE (DOMINANT) === -->
+                <div class="calculator-section" id="drug-calculator-anchor">
+                    <div class="segmented-control hidden" id="calculator-mode-selector">
+                        <button class="segment active" data-mode="weight_based">Weight-Based</button>
+                        <button class="segment" data-mode="fixed_dose">Fixed Dose</button>
+                    </div>
+                    <div class="table-header-row">
+                        <div class="table-col-label"><span id="calc-header-unit">mcg/kg/min</span></div>
+                        <div class="table-col-label right">mL/hr</div>
+                    </div>
+                    <div class="clinical-table-wrapper">
+                        <table class="clinical-table" id="dose-table">
+                            <tbody id="dose-table-body"><!-- Populated by JS --></tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer-formula" id="formula-display">
+                        Formula: (Dose × Weight × 60) / Concentration
+                    </div>
+                </div>
+
+                <!-- === ADMINISTRATION NOTES === -->
+                <details class="more-info-drawer" id="admin-notes-section" open>
+                    <summary class="more-info-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        Administration Notes
+                        <svg class="drawer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-left:auto;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </summary>
+                    <div class="more-info-content">
+                        <div class="info-block" id="dose-range-wrapper">
+                            <div class="info-block-label">DOSE RANGE</div>
+                            <div class="info-block-value" id="detail-dose-range">--</div>
+                        </div>
+                        <div class="info-block">
+                            <div class="info-block-label">ADMINISTRATION</div>
+                            <div class="info-block-value" id="detail-admin-guidance">--</div>
+                        </div>
+                        <div class="info-block" id="cautions-wrapper">
+                            <div class="info-block-label">IMPORTANT CAUTIONS</div>
+                            <ul class="info-list caution-text" id="detail-cautions"></ul>
+                        </div>
+                        <div class="info-block" id="incompatible-wrapper">
+                            <div class="info-block-label">INCOMPATIBLE DILUENTS</div>
+                            <ul class="info-list caution-text" id="detail-incompatible"></ul>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- === INDICATIONS === -->
+                <details class="more-info-drawer" id="indications-section">
+                    <summary class="more-info-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        Indications
+                        <svg class="drawer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-left:auto;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </summary>
+                    <div class="more-info-content">
+                        <ul id="detail-indications" class="bullet-list info-list"></ul>
+                        <div id="detail-indications-empty" class="info-block-value hidden">Not specified in current data.</div>
+                    </div>
+                </details>
+
+                <!-- === REFERENCES === -->
+                <details class="more-info-drawer" id="references-section">
+                    <summary class="more-info-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        References
+                        <svg class="drawer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-left:auto;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </summary>
+                    <div class="more-info-content">
+                        <ul class="info-list" id="detail-references"></ul>
+                        <div id="detail-references-empty" class="info-block-value hidden">Not specified in current data.</div>
+                        <div class="clinical-disclaimer-small" style="margin-top: 12px;">
+                            ⚠ Always verify against local protocols, patient-specific factors, and current clinical judgement. This tool does not replace clinical decision-making.
+                        </div>
+                        <div class="info-block-label" id="detail-last-reviewed" style="margin-top: 12px;"></div>
+                    </div>
+                </details>
+
+
+            </div>
+        </main>
+
+
+        <!-- Favorites View -->
+        <main id="favorites-view" class="view hidden">
+            <div class="sticky-top-container">
+                <header class="app-header">
+                    <div class="header-title">Favorites</div>
+                </header>
+                <!-- Patient Bar -->
+                <div class="patient-bar">
+                    <div class="patient-info">
+                        <svg class="patient-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>Patient Weight: <strong class="patient-weight-display">--</strong></span>
+                    </div>
+                    <button class="edit-weight-btn-simple">Tap to Set</button>
+                </div>
+            </div>
+            
+            <div class="scroll-content">
+                <div class="home-section">
+                    <div class="section-header">
+                        <h2>YOUR FAVORITES</h2>
+                    </div>
+                    <div id="favorites-list-view" class="list-container">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div id="favorites-empty-state" class="empty-state hidden">
+                        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <h3>No Favorite Medications</h3>
+                        <p>Star medications to pin them here for rapid bedside access.</p>
+                    </div>
+                </div>
+
+                <div class="home-section">
+                    <div class="section-header">
+                        <h2>ALL MEDICATIONS</h2>
+                    </div>
+                    <div id="favorites-all-drugs-list" class="list-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Calculators View -->
+        <main id="calculators-view" class="view hidden">
+            <div class="sticky-top-container">
+                <header class="app-header">
+                    <div class="header-title">Calculators</div>
+                </header>
+                <!-- Patient Bar -->
+                <div class="patient-bar">
+                    <div class="patient-info">
+                        <svg class="patient-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>Patient Weight: <strong class="patient-weight-display">--</strong></span>
+                    </div>
+                    <button class="edit-weight-btn-simple">Tap to Set</button>
+                </div>
+            </div>
+
+            <div class="scroll-content">
+                <div class="home-section">
+                    <div class="section-header">
+                        <h2>SELECT MEDICATION FOR CALCULATOR</h2>
+                    </div>
+                    <div id="calculators-list" class="list-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Reference View -->
+        <main id="reference-view" class="view hidden">
+            <div class="sticky-top-container">
+                <header class="app-header">
+                    <div class="header-title">Reference Guidelines</div>
+                </header>
+                <!-- Patient Bar -->
+                <div class="patient-bar">
+                    <div class="patient-info">
+                        <svg class="patient-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>Patient Weight: <strong class="patient-weight-display">--</strong></span>
+                    </div>
+                    <button class="edit-weight-btn-simple">Tap to Set</button>
+                </div>
+            </div>
+
+            <div class="scroll-content">
+                <div class="home-section">
+                    <div class="section-header">
+                        <h2>STANDARD PREPARATIONS</h2>
+                    </div>
+                    <div class="clinical-table-wrapper">
+                        <table class="clinical-table">
+                            <thead>
+                                <tr>
+                                    <th>Drug</th>
+                                    <th>Std. Dilution</th>
+                                    <th>Concentration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Noradrenaline</strong></td>
+                                    <td>4 mg in 50 mL Dextrose 5%</td>
+                                    <td>80 mcg/mL</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Adrenaline</strong></td>
+                                    <td>3 mg in 50 mL Normal Saline</td>
+                                    <td>60 mcg/mL</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Dopamine</strong></td>
+                                    <td>200 mg in 50 mL Normal Saline</td>
+                                    <td>4000 mcg/mL</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Dobutamine</strong></td>
+                                    <td>250 mg in 50 mL Normal Saline</td>
+                                    <td>5000 mcg/mL</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>GTN</strong></td>
+                                    <td>5 mg in 50 mL Normal Saline</td>
+                                    <td>100 mcg/mL</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="section-header" style="margin-top: var(--spacing-lg);">
+                        <h2>DILUENT COMPATIBILITY QUICK-REF</h2>
+                    </div>
+                    <div class="clinical-table-wrapper">
+                        <table class="clinical-table">
+                            <thead>
+                                <tr>
+                                    <th>Drug</th>
+                                    <th>Compatible</th>
+                                    <th>Incompatible / Avoid</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Noradrenaline</strong></td>
+                                    <td>D5%</td>
+                                    <td>NS (alone is not recommended due to oxidation)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Adrenaline</strong></td>
+                                    <td>NS, D5%</td>
+                                    <td>Alkaline solutions</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Dopamine</strong></td>
+                                    <td>NS, D5%</td>
+                                    <td>Alkaline solutions (Sodium Bicarbonate)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Dobutamine</strong></td>
+                                    <td>NS, D5%</td>
+                                    <td>Alkaline solutions</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>GTN</strong></td>
+                                    <td>NS, D5%</td>
+                                    <td>Avoid PVC bags/tubing at high concentrations</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="clinical-disclaimer" style="margin-top: var(--spacing-lg); margin-bottom: 0;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        <span>References: Pharmacy Department HPUPM guidelines and Hospital Sultanah Aminah Guidelines 2013. Always verify.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Settings View -->
+        <main id="settings-view" class="view hidden">
+            <div class="sticky-top-container">
+                <header class="app-header">
+                    <div class="header-title">Settings & Options</div>
+                </header>
+            </div>
+
+            <div class="scroll-content">
+                <div class="home-section">
+                    <div class="section-header">
+                        <h2>PATIENT PROFILE</h2>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-row" id="settings-weight-trigger">
+                            <div class="settings-row-label">
+                                <strong>Default Patient Weight</strong>
+                                <span class="settings-row-sub">Used for weight-based dose calculations</span>
+                            </div>
+                            <div class="settings-row-value">
+                                <span id="settings-weight-display">--</span> kg
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-header" style="margin-top: var(--spacing-lg);">
+                        <h2>THEME PREFERENCE</h2>
+                    </div>
+                    <div class="segmented-control" id="theme-selector">
+                        <button class="segment" data-theme="light">Light</button>
+                        <button class="segment" data-theme="dark">Dark</button>
+                        <button class="segment" data-theme="system">System</button>
+                    </div>
+
+                    <div class="section-header" style="margin-top: var(--spacing-lg);">
+                        <h2>APP DATA</h2>
+                    </div>
+                    <div class="settings-group">
+                        <button class="settings-btn-row text-danger" id="clear-recents-btn">
+                            Clear Recent Searches
+                        </button>
+                        <button class="settings-btn-row text-danger" id="reset-app-btn">
+                            Reset All Application Data
+                        </button>
+                    </div>
+
+                    <div class="settings-footer">
+                        <p><strong>ED IV Meds</strong> — Bedside Clinical Tool</p>
+                        <p>Version 1.1.0 (PWA)</p>
+                        <p style="margin-top: 8px;">Designed for ultra-fast, safe infusion calculations in the Emergency Department.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-tab="home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <span>Search</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="favorites">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <span>Favorites</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <!-- Hidden input for dose (kept for calculator logic) -->
+        <input type="hidden" id="calc-dose-input">
+    </div>
+
+    <!-- Custom Keypad Bottom Sheet -->
+    <div id="keypad-overlay" class="keypad-overlay hidden">
+        <div class="keypad-sheet">
+            <div class="keypad-header">
+                <div class="keypad-title" id="keypad-title">Weight (kg)</div>
+                <button class="icon-btn close-btn" id="keypad-close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="keypad-display-row">
+                <div class="keypad-display" id="keypad-display"></div>
+            </div>
+
+            <div class="keypad-grid-modern">
+                <button class="key-btn num-btn" data-val="1">1</button>
+                <button class="key-btn num-btn" data-val="2">2</button>
+                <button class="key-btn num-btn" data-val="3">3</button>
+                <button class="key-btn num-btn" data-val="4">4</button>
+                <button class="key-btn num-btn" data-val="5">5</button>
+                <button class="key-btn num-btn" data-val="6">6</button>
+                <button class="key-btn num-btn" data-val="7">7</button>
+                <button class="key-btn num-btn" data-val="8">8</button>
+                <button class="key-btn num-btn" data-val="9">9</button>
+                <button class="key-btn num-btn" data-val=".">.</button>
+                <button class="key-btn num-btn" data-val="0">0</button>
+                <button class="key-btn action-btn del-btn" id="keypad-del">⌫</button>
+            </div>
+            <div class="keypad-actions-modern">
+                <button class="key-btn clear-btn-modern" id="keypad-clear">CLEAR</button>
+                <button class="key-btn done-btn-modern" id="keypad-done">DONE</button>
+            </div>
+        </div>
+    </div>
+    <!-- Preparation Selector Modal -->
+    <div id="prep-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-header">
+            <div class="modal-title">Select Preparation</div>
+            <button class="icon-btn close-btn" id="prep-modal-close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="modal-content" id="prep-modal-list">
+            <!-- Populated by JS -->
+        </div>
+        <div class="modal-content" style="flex: 0; padding-top: 0;">
+            <div class="advanced-options-trigger" id="custom-conc-trigger">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="padding: 8px; background: var(--border-color); border-radius: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600;">Custom Concentration (Advanced)</div>
+                        <div style="font-size: 10px; color: var(--text-muted);">Set your own concentration</div>
+                    </div>
+                </div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: var(--text-muted);"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Concentration Modal -->
+    <div id="custom-conc-modal" class="modal-overlay hidden">
+        <div class="modal-header">
+            <button class="icon-btn close-btn" id="custom-conc-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <div class="modal-title">Custom Concentration</div>
+            <button class="icon-btn close-btn" id="custom-conc-close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="clinical-disclaimer warning-box" style="margin-bottom: var(--spacing-lg); background-color: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); color: var(--accent-warning);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span>Use custom concentration only when clinically appropriate and according to local protocol.</span>
+            </div>
+
+            <div class="section-subtitle">ENTER CONCENTRATION</div>
+            <div class="custom-conc-input-wrapper keypad-trigger" data-input-target="custom_conc" id="custom-conc-input-row">
+                <div class="custom-conc-value" id="custom-conc-display">120</div>
+                <div class="custom-conc-unit">mcg/ml</div>
+            </div>
+
+            <div class="section-subtitle" style="margin-top: var(--spacing-xl);">COMPATIBLE DILUENT</div>
+            <div class="select-wrapper" style="width: 100%; margin-bottom: var(--spacing-lg);">
+                <select id="custom-conc-diluent" class="clean-select">
+                    <!-- Populated dynamically -->
+                </select>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            
+            <div class="section-subtitle">NOTES (OPTIONAL)</div>
+            <input type="text" id="custom-conc-notes" style="width: 100%; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 12px; color: var(--text-primary); margin-bottom: var(--spacing-xl);" placeholder="Add note...">
+
+            <button class="btn-primary" id="apply-custom-conc-btn">Apply & Recalculate</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

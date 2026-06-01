@@ -1,0 +1,526 @@
+[
+  {
+    "id": "noradrenaline",
+    "name": "Noradrenaline",
+    "aliases": [
+      "norad",
+      "nor",
+      "norepi",
+      "norepinephrine"
+    ],
+    "searchTerms": [
+      "shock",
+      "septic shock",
+      "severe hypotension",
+      "pressor",
+      "vasopressor"
+    ],
+    "category": "Vasopressor",
+    "indications": [
+      "Shock",
+      "Severe hypotension",
+      "Septic shock"
+    ],
+    "formulaType": "weight_based",
+    "weightBased": true,
+    "doseUnit": "mcg/kg/min",
+    "doseMin": 0.05,
+    "doseMax": 0.5,
+    "doseStep": 0.05,
+    "dosePoints": null,
+    "allowCustomConcentration": false,
+    "safety": {
+      "highAlert": true,
+      "requiresPump": true,
+      "requiresCVL": false,
+      "peripheralCompatible": true,
+      "requiresCardiacMonitoring": true
+    },
+    "preparations": [
+      {
+        "id": "single",
+        "label": "Single Strength",
+        "isDefault": true,
+        "isHighConcentration": false,
+        "description": "4mg in 50ml Dextrose 5%",
+        "ampouleStrength": "4mg/4ml",
+        "ampouleCount": 1,
+        "drugAmountMg": 4,
+        "medicationVolumeMl": 4,
+        "diluent": "Dextrose 5%",
+        "diluentVolumeMl": 46,
+        "finalVolumeMl": 50,
+        "concentration": 80,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Normal Saline alone — not recommended due to lack of oxidation protection"
+        ],
+        "preparationSteps": [
+          "Draw up 1 ampoule of Noradrenaline 4mg/4ml",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Dextrose 5% (add approx. 46ml)",
+          "Final volume = 50ml, Concentration = 80 mcg/ml"
+        ],
+        "notes": "Recommended ED preparation"
+      },
+      {
+        "id": "double",
+        "label": "Double Strength",
+        "isDefault": false,
+        "isHighConcentration": true,
+        "description": "8mg in 50ml Dextrose 5%",
+        "ampouleStrength": "4mg/4ml",
+        "ampouleCount": 2,
+        "drugAmountMg": 8,
+        "medicationVolumeMl": 8,
+        "diluent": "Dextrose 5%",
+        "diluentVolumeMl": 42,
+        "finalVolumeMl": 50,
+        "concentration": 160,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Normal Saline alone — not recommended due to lack of oxidation protection"
+        ],
+        "preparationSteps": [
+          "Draw up 2 ampoules of Noradrenaline 4mg/4ml (total 8ml)",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Dextrose 5% (add approx. 42ml)",
+          "Final volume = 50ml, Concentration = 160 mcg/ml"
+        ],
+        "notes": "Use higher concentration only when clinically appropriate and according to local protocol"
+      }
+    ],
+    "administrationGuidance": "Syringe pump. Titrate according to desired haemodynamic response. Wean gradually.",
+    "importantCautions": [
+      "Use dedicated line if possible",
+      "Inspect peripheral line regularly if used peripherally",
+      "Do not use Normal Saline alone as diluent (oxidation risk)"
+    ],
+    "references": [
+      "Pharmacy Department HPUPM",
+      "Product Leaflet"
+    ],
+    "lastReviewed": "2026-06-01"
+  },
+  {
+    "id": "adrenaline",
+    "name": "Adrenaline",
+    "aliases": [
+      "adr",
+      "epi",
+      "epinephrine"
+    ],
+    "searchTerms": [
+      "anaphylaxis",
+      "shock",
+      "pressor",
+      "vasopressor",
+      "inotrope",
+      "cardiac arrest"
+    ],
+    "category": "Inotrope / Vasopressor",
+    "indications": [
+      "Anaphylaxis",
+      "Shock",
+      "Cardiac arrest (separate protocol)"
+    ],
+    "formulaType": "weight_based",
+    "weightBased": true,
+    "doseUnit": "mcg/kg/min",
+    "doseMin": 0.1,
+    "doseMax": 1.0,
+    "doseStep": 0.05,
+    "dosePoints": null,
+    "allowCustomConcentration": false,
+    "safety": {
+      "highAlert": true,
+      "requiresPump": true,
+      "requiresCVL": false,
+      "peripheralCompatible": true,
+      "requiresCardiacMonitoring": true
+    },
+    "preparations": [
+      {
+        "id": "single",
+        "label": "Single Strength",
+        "isDefault": true,
+        "isHighConcentration": false,
+        "description": "3mg in 50ml Normal Saline",
+        "ampouleStrength": "1mg/1ml",
+        "ampouleCount": 3,
+        "drugAmountMg": 3,
+        "medicationVolumeMl": 3,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 47,
+        "finalVolumeMl": 50,
+        "concentration": 60,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Normal Saline",
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Alkaline solutions",
+          "Sodium bicarbonate"
+        ],
+        "preparationSteps": [
+          "Draw up 3 ampoules of Adrenaline 1mg/1ml (total 3ml)",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Normal Saline (add approx. 47ml)",
+          "Final volume = 50ml, Concentration = 60 mcg/ml"
+        ],
+        "notes": "Recommended ED preparation"
+      },
+      {
+        "id": "double",
+        "label": "Double Strength",
+        "isDefault": false,
+        "isHighConcentration": true,
+        "description": "6mg in 50ml Normal Saline",
+        "ampouleStrength": "1mg/1ml",
+        "ampouleCount": 6,
+        "drugAmountMg": 6,
+        "medicationVolumeMl": 6,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 44,
+        "finalVolumeMl": 50,
+        "concentration": 120,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Normal Saline",
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Alkaline solutions",
+          "Sodium bicarbonate"
+        ],
+        "preparationSteps": [
+          "Draw up 6 ampoules of Adrenaline 1mg/1ml (total 6ml)",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Normal Saline (add approx. 44ml)",
+          "Final volume = 50ml, Concentration = 120 mcg/ml"
+        ],
+        "notes": "Use higher concentration only when clinically appropriate and according to local protocol"
+      }
+    ],
+    "administrationGuidance": "Syringe pump. Titrate according to response. Ensure BP cuff is not on the arm of the peripheral line.",
+    "importantCautions": [
+      "Ensure BP cuff is not on the arm of the peripheral line",
+      "Inspect peripheral line site regularly for signs of extravasation",
+      "Do not mix with alkaline solutions"
+    ],
+    "references": [
+      "Pharmacy Department HPUPM",
+      "Hospital Sultanah Aminah Guidelines 2013"
+    ],
+    "lastReviewed": "2026-06-01"
+  },
+  {
+    "id": "dopamine",
+    "name": "Dopamine",
+    "aliases": [
+      "dopa"
+    ],
+    "searchTerms": [
+      "hypotension",
+      "shock",
+      "inotrope",
+      "pressor"
+    ],
+    "category": "Inotrope",
+    "indications": [
+      "Hypotension",
+      "Shock",
+      "Cardiogenic shock"
+    ],
+    "formulaType": "weight_based",
+    "weightBased": true,
+    "doseUnit": "mcg/kg/min",
+    "doseMin": 5,
+    "doseMax": 20,
+    "doseStep": 1,
+    "dosePoints": null,
+    "allowCustomConcentration": false,
+    "safety": {
+      "highAlert": true,
+      "requiresPump": true,
+      "requiresCVL": false,
+      "peripheralCompatible": true,
+      "requiresCardiacMonitoring": true
+    },
+    "preparations": [
+      {
+        "id": "single",
+        "label": "Single Strength",
+        "isDefault": true,
+        "isHighConcentration": false,
+        "description": "200mg in 50ml Normal Saline",
+        "ampouleStrength": "200mg/5ml",
+        "ampouleCount": 1,
+        "drugAmountMg": 200,
+        "medicationVolumeMl": 5,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 45,
+        "finalVolumeMl": 50,
+        "concentration": 4000,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Normal Saline",
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Alkaline solutions",
+          "Sodium bicarbonate"
+        ],
+        "preparationSteps": [
+          "Draw up 1 ampoule of Dopamine 200mg/5ml (5ml)",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Normal Saline (add approx. 45ml)",
+          "Final volume = 50ml, Concentration = 4000 mcg/ml"
+        ],
+        "notes": "Preferred preparation in ED. Preferable to use single strength."
+      },
+      {
+        "id": "double",
+        "label": "Double Strength",
+        "isDefault": false,
+        "isHighConcentration": true,
+        "description": "400mg in 50ml Normal Saline",
+        "ampouleStrength": "200mg/5ml",
+        "ampouleCount": 2,
+        "drugAmountMg": 400,
+        "medicationVolumeMl": 10,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 40,
+        "finalVolumeMl": 50,
+        "concentration": 8000,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Normal Saline",
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Alkaline solutions",
+          "Sodium bicarbonate"
+        ],
+        "preparationSteps": [
+          "Draw up 2 ampoules of Dopamine 200mg/5ml (total 10ml)",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Normal Saline (add approx. 40ml)",
+          "Final volume = 50ml, Concentration = 8000 mcg/ml"
+        ],
+        "notes": "Use higher concentration only when clinically appropriate and according to local protocol"
+      }
+    ],
+    "administrationGuidance": "Syringe pump. No bolus doses. Wean gradually.",
+    "importantCautions": [
+      "No bolus doses — infusion only",
+      "Preferable to use single strength in ED",
+      "Do not mix with alkaline solutions or sodium bicarbonate"
+    ],
+    "references": [
+      "Pharmacy Department HPUPM"
+    ],
+    "lastReviewed": "2026-06-01"
+  },
+  {
+    "id": "dobutamine",
+    "name": "Dobutamine",
+    "aliases": [
+      "dobuta"
+    ],
+    "searchTerms": [
+      "heart failure",
+      "cardiogenic shock",
+      "inotrope"
+    ],
+    "category": "Inotrope",
+    "indications": [
+      "Heart failure",
+      "Cardiogenic shock"
+    ],
+    "formulaType": "weight_based",
+    "weightBased": true,
+    "doseUnit": "mcg/kg/min",
+    "doseMin": 2.5,
+    "doseMax": 20,
+    "doseStep": 2.5,
+    "dosePoints": null,
+    "allowCustomConcentration": false,
+    "safety": {
+      "highAlert": true,
+      "requiresPump": true,
+      "requiresCVL": false,
+      "peripheralCompatible": true,
+      "requiresCardiacMonitoring": true
+    },
+    "preparations": [
+      {
+        "id": "single",
+        "label": "Single Strength",
+        "isDefault": true,
+        "isHighConcentration": false,
+        "description": "250mg in 50ml Normal Saline",
+        "ampouleStrength": "250mg/20ml (12.5mg/ml)",
+        "ampouleCount": 1,
+        "drugAmountMg": 250,
+        "medicationVolumeMl": 20,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 30,
+        "finalVolumeMl": 50,
+        "concentration": 5000,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Normal Saline",
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Alkaline solutions",
+          "Sodium bicarbonate"
+        ],
+        "preparationSteps": [
+          "Draw out 20ml from 1 vial of Dobutamine 12.5mg/ml (250mg total)",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Normal Saline (add approx. 30ml)",
+          "Final volume = 50ml, Concentration = 5000 mcg/ml"
+        ],
+        "notes": "Use the full 20ml from the 250mg vial."
+      }
+    ],
+    "administrationGuidance": "Syringe pump. No bolus doses. Wean gradually.",
+    "importantCautions": [
+      "No bolus doses — infusion only",
+      "Preferable to use single strength in ED",
+      "Do not mix with alkaline solutions or sodium bicarbonate"
+    ],
+    "references": [
+      "Pharmacy Department HPUPM"
+    ],
+    "lastReviewed": "2026-06-01"
+  },
+  {
+    "id": "gtn",
+    "name": "Glyceryl Trinitrate (GTN)",
+    "aliases": [
+      "gtn",
+      "nitro",
+      "nitroglycerin",
+      "nitrate"
+    ],
+    "searchTerms": [
+      "hypertensive emergency",
+      "heart failure",
+      "angina",
+      "chest pain",
+      "vasodilator",
+      "nitrate"
+    ],
+    "category": "Vasodilator",
+    "indications": [
+      "Hypertensive emergency",
+      "Acute decompensated heart failure",
+      "Unstable angina"
+    ],
+    "formulaType": "fixed_dose",
+    "weightBased": false,
+    "doseUnit": "mcg/min",
+    "dosePoints": [
+      5,
+      10,
+      20,
+      40,
+      60,
+      80,
+      100,
+      150,
+      200
+    ],
+    "allowCustomConcentration": false,
+    "safety": {
+      "highAlert": true,
+      "requiresPump": true,
+      "requiresCVL": false,
+      "peripheralCompatible": true,
+      "requiresCardiacMonitoring": true
+    },
+    "preparations": [
+      {
+        "id": "standard",
+        "label": "Standard Concentration",
+        "isDefault": true,
+        "isHighConcentration": false,
+        "description": "5mg in 50ml Normal Saline",
+        "ampouleStrength": "5mg/1ml",
+        "ampouleCount": 1,
+        "drugAmountMg": 5,
+        "medicationVolumeMl": 1,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 49,
+        "finalVolumeMl": 50,
+        "concentration": 100,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Normal Saline",
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Avoid PVC bags/tubing at high concentrations"
+        ],
+        "preparationSteps": [
+          "Draw up 1ml of GTN 5mg/1ml",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Normal Saline (add approx. 49ml)",
+          "Final volume = 50ml, Concentration = 100 mcg/ml"
+        ],
+        "notes": "Recommended ED preparation. Use non-PVC tubing."
+      },
+      {
+        "id": "high",
+        "label": "High Concentration",
+        "isDefault": false,
+        "isHighConcentration": true,
+        "description": "20mg in 50ml Normal Saline",
+        "ampouleStrength": "5mg/1ml",
+        "ampouleCount": 4,
+        "drugAmountMg": 20,
+        "medicationVolumeMl": 4,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 46,
+        "finalVolumeMl": 50,
+        "concentration": 400,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Normal Saline",
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Avoid PVC bags/tubing — adsorption at high concentrations"
+        ],
+        "preparationSteps": [
+          "Draw up 4ml of GTN 5mg/1ml (total 20mg)",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Normal Saline (add approx. 46ml)",
+          "Final volume = 50ml, Concentration = 400 mcg/ml",
+          "Use non-PVC tubing — PVC adsorbs GTN at high concentrations"
+        ],
+        "notes": "Maximum concentration. Higher concentrations will be adsorbed by PVC tubing. Use non-PVC tubing."
+      }
+    ],
+    "administrationGuidance": "Syringe pump. Titrate to effect. Use non-PVC giving set.",
+    "importantCautions": [
+      "Maximum safe concentration: 400 mcg/ml",
+      "Higher concentrations will be adsorbed by PVC tubing — use non-PVC administration set",
+      "Hypotension may occur — monitor BP closely"
+    ],
+    "references": [
+      "Pharmacy Department HPUPM"
+    ],
+    "lastReviewed": "2026-06-01"
+  }
+]
