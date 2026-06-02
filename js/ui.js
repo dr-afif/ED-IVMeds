@@ -14,6 +14,7 @@ class UIService {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleKeypadClick = this.handleKeypadClick.bind(this);
         this.closeKeypad = this.closeKeypad.bind(this);
+        this.handleDataUpdated = this.handleDataUpdated.bind(this);
         
         // DOM Elements
         this.searchInput = document.getElementById('search-input');
@@ -39,6 +40,7 @@ class UIService {
 
         // Search Input
         this.searchInput.addEventListener('input', this.handleSearch);
+        window.addEventListener('edivmeds:data-updated', this.handleDataUpdated);
         
         // Clear Search
         this.clearSearchBtn.addEventListener('click', () => {
@@ -339,16 +341,51 @@ class UIService {
         const appVersionEl = document.getElementById('about-app-version');
         const dbVersionEl = document.getElementById('about-db-version');
         const dbUpdatedEl = document.getElementById('about-db-updated');
+        const dataSourceEl = document.getElementById('about-data-source');
+        const lastSyncEl = document.getElementById('about-last-sync');
 
         if (appVersionEl) appVersionEl.textContent = this.appVersion;
 
-        const latestUpdate = window.dataService.getLatestDatabaseUpdate();
+        const metadata = window.dataService.getDatabaseMetadata();
         if (dbVersionEl) {
-            dbVersionEl.textContent = latestUpdate ? `DB-${latestUpdate.replaceAll('-', '.')}` : 'Not specified';
+            dbVersionEl.textContent = metadata.version || 'Not specified';
         }
         if (dbUpdatedEl) {
-            dbUpdatedEl.textContent = latestUpdate || 'Not available';
+            dbUpdatedEl.textContent = metadata.lastUpdated || 'Not available';
         }
+        if (dataSourceEl) {
+            dataSourceEl.textContent = metadata.source || 'Local fallback';
+        }
+        if (lastSyncEl) {
+            lastSyncEl.textContent = metadata.lastSyncTime || 'Not yet synced';
+        }
+    }
+
+    handleDataUpdated() {
+        if (this.currentView === 'home') {
+            this.renderHomeLists();
+            if (this.searchInput.value.trim() !== '') {
+                this.handleSearch({ target: this.searchInput });
+            }
+        } else if (this.currentView === 'favorites') {
+            this.renderFavoritesViewList();
+        } else if (this.currentView === 'settings') {
+            this.renderAboutMetadata();
+        }
+
+        this.showToast('Drug database updated');
+    }
+
+    showToast(message) {
+        const toast = document.getElementById('app-toast');
+        if (!toast) return;
+
+        toast.textContent = message;
+        toast.classList.remove('hidden');
+        clearTimeout(this.toastTimer);
+        this.toastTimer = setTimeout(() => {
+            toast.classList.add('hidden');
+        }, 2400);
     }
 
     renderHomeLists() {

@@ -1,4 +1,4 @@
-const APP_VERSION = 'v2.0.3';
+const APP_VERSION = 'v2.0.5';
 const CACHE_NAME = `ed-iv-meds-${APP_VERSION}`;
 const ASSETS_TO_CACHE = [
   './',
