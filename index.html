@@ -567,6 +567,14 @@
                                 <span>Last Database Update</span>
                                 <strong id="about-db-updated">2026-06-02</strong>
                             </div>
+                            <div class="about-meta-row">
+                                <span>Data Source</span>
+                                <strong id="about-data-source">Local fallback</strong>
+                            </div>
+                            <div class="about-meta-row">
+                                <span>Last Successful Sync</span>
+                                <strong id="about-last-sync">Not yet synced</strong>
+                            </div>
                         </div>
                     </div>
 
@@ -594,6 +602,8 @@
                 <span>Settings</span>
             </a>
         </nav>
+
+        <div id="app-toast" class="app-toast hidden" role="status" aria-live="polite"></div>
 
         <!-- Hidden input for dose (kept for calculator logic) -->
         <input type="hidden" id="calc-dose-input">

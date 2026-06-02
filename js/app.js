@@ -22,4 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // 5. Initial render
     window.uiService.showView('home');
+
+    // 6. Background stale-while-revalidate update
+    window.dataService.revalidateRemoteData();
 });
