@@ -1013,6 +1013,19 @@ class UIService {
 
         tableData.forEach(row => {
             const tr = document.createElement('tr');
+            
+            if (row.isPhase) {
+                tr.innerHTML = `<td colspan="2" style="background:var(--bg-surface-elevated, #f8f9fa); border-left: 3px solid var(--accent-primary); padding: 12px 16px;">
+                                   <div style="font-weight:600; color:var(--text-primary); margin-bottom:4px;">${row.phaseName}</div>
+                                   <div style="font-size:0.9em; color:var(--text-muted); display:flex; justify-content:space-between;">
+                                      <span>${row.dose} ${row.doseUnit}</span>
+                                      <strong style="color:var(--text-primary);">${row.rate} mL/hr</strong>
+                                   </div>
+                                </td>`;
+                tbody.appendChild(tr);
+                return;
+            }
+            
             tr.dataset.dose = row.dose;
             
             const tdDose = document.createElement('td');

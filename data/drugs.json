@@ -1,32 +1,30 @@
 [
   {
-    "id": "noradrenaline",
-    "name": "Noradrenaline",
+    "id": "actrapid",
+    "name": "Actrapid Insulin Infusion",
     "aliases": [
-      "norad",
-      "nor",
-      "norepi",
-      "norepinephrine"
+      "insulin",
+      "regular insulin"
+    ],
+    "category": "Insulin",
+    "indications": [
+      "Hyperglycemia",
+      "DKA",
+      "HHS"
     ],
     "searchTerms": [
-      "shock",
-      "septic shock",
-      "severe hypotension",
-      "pressor",
-      "vasopressor"
-    ],
-    "category": "Vasopressor",
-    "indications": [
-      "Shock",
-      "Severe hypotension",
-      "Septic shock"
+      "insulin",
+      "sugar",
+      "glucose",
+      "dka",
+      "ketones"
     ],
     "formulaType": "weight_based",
     "weightBased": true,
-    "doseUnit": "mcg/kg/min",
+    "doseUnit": "U/kg/hr",
     "doseMin": 0.05,
-    "doseMax": 0.5,
-    "doseStep": 0.05,
+    "doseMax": 0.1,
+    "doseStep": 0.01,
     "dosePoints": null,
     "allowCustomConcentration": false,
     "safety": {
@@ -34,79 +32,47 @@
       "requiresPump": true,
       "requiresCVL": false,
       "peripheralCompatible": true,
-      "requiresCardiacMonitoring": true
+      "requiresCardiacMonitoring": false
     },
     "preparations": [
       {
-        "id": "single",
-        "label": "Single Strength",
+        "id": "standard",
+        "label": "Standard Preparation",
         "isDefault": true,
         "isHighConcentration": false,
-        "description": "4mg in 50ml Dextrose 5%",
-        "ampouleStrength": "4mg/4ml",
+        "description": "50 IU in 50ml Normal Saline",
+        "ampouleStrength": "100 IU/ml",
         "ampouleCount": 1,
-        "drugAmountMg": 4,
-        "medicationVolumeMl": 4,
-        "diluent": "Dextrose 5%",
-        "diluentVolumeMl": 46,
+        "drugAmountMg": null,
+        "medicationVolumeMl": 0.5,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 49.5,
         "finalVolumeMl": 50,
-        "concentration": 80,
-        "concentrationUnit": "mcg/ml",
+        "concentration": 1,
+        "concentrationUnit": "IU/ml",
         "compatibleDiluents": [
-          "Dextrose 5%"
+          "Normal Saline"
         ],
-        "incompatibleDiluents": [
-          "Normal Saline alone — not recommended due to lack of oxidation protection"
-        ],
+        "incompatibleDiluents": [],
         "preparationSteps": [
-          "Draw up 1 ampoule of Noradrenaline 4mg/4ml",
-          "Add to 50ml syringe",
-          "Make up to 50ml with Dextrose 5% (add approx. 46ml)",
-          "Final volume = 50ml, Concentration = 80 mcg/ml"
+          "Take 50 IU of insulin (0.5 mls from 100 IU/ml vial or pen)",
+          "Dilute with 49.5 ml of Normal Saline = 50 mls dilution",
+          "Rate: 1ml/ hour = 1 IU/ hour"
         ],
-        "notes": "Recommended ED preparation"
-      },
-      {
-        "id": "double",
-        "label": "Double Strength",
-        "isDefault": false,
-        "isHighConcentration": true,
-        "description": "8mg in 50ml Dextrose 5%",
-        "ampouleStrength": "4mg/4ml",
-        "ampouleCount": 2,
-        "drugAmountMg": 8,
-        "medicationVolumeMl": 8,
-        "diluent": "Dextrose 5%",
-        "diluentVolumeMl": 42,
-        "finalVolumeMl": 50,
-        "concentration": 160,
-        "concentrationUnit": "mcg/ml",
-        "compatibleDiluents": [
-          "Dextrose 5%"
-        ],
-        "incompatibleDiluents": [
-          "Normal Saline alone — not recommended due to lack of oxidation protection"
-        ],
-        "preparationSteps": [
-          "Draw up 2 ampoules of Noradrenaline 4mg/4ml (total 8ml)",
-          "Add to 50ml syringe",
-          "Make up to 50ml with Dextrose 5% (add approx. 42ml)",
-          "Final volume = 50ml, Concentration = 160 mcg/ml"
-        ],
-        "notes": "Use higher concentration only when clinically appropriate and according to local protocol"
+        "notes": "Ref: Clinical Practice Guidelines on Management of Type 2 DM, KKM 2015"
       }
     ],
-    "administrationGuidance": "Syringe pump. Titrate according to desired haemodynamic response. Wean gradually.",
+    "administrationGuidance": "Commence Fixed Rate IV Insulin Infusion. Aim to drop Blood Glucose Level (BGL)/ Glucometer (GM) 2-5 mmol/L per HOUR. INCREASE if BGL doesn't drop by a minimum of 2 mmol/hr. INCREASE if serum ketone doesn't decrease by minimum of 0.5mmol/hr. REDUCE dose if BGL dropping too rapidly > 5 mmol/hr. Calculator support is limited as titration is based on BGL, not purely weight.",
     "importantCautions": [
-      "Use dedicated line if possible",
-      "Inspect peripheral line regularly if used peripherally",
-      "Do not use Normal Saline alone as diluent (oxidation risk)"
+      "Titrate according to Blood Glucose Levels.",
+      "Monitor ketones if available."
     ],
     "references": [
       "Pharmacy Department HPUPM",
-      "Product Leaflet"
+      "Clinical Practice Guidelines on Management of Type 2 DM, KKM 2015",
+      "Hospital Sultanah Aminah Guidelines for Drug Reconstitution, 2013"
     ],
-    "lastReviewed": "2026-06-01"
+    "lastReviewed": "2026-06-02"
   },
   {
     "id": "adrenaline",
@@ -134,7 +100,7 @@
     "weightBased": true,
     "doseUnit": "mcg/kg/min",
     "doseMin": 0.1,
-    "doseMax": 1.0,
+    "doseMax": 1,
     "doseStep": 0.05,
     "dosePoints": null,
     "allowCustomConcentration": false,
@@ -218,6 +184,255 @@
     "references": [
       "Pharmacy Department HPUPM",
       "Hospital Sultanah Aminah Guidelines 2013"
+    ],
+    "lastReviewed": "2026-06-01"
+  },
+  {
+    "id": "aminophylline",
+    "name": "Aminophylline",
+    "aliases": [
+      "aminolasix"
+    ],
+    "category": "Bronchodilator",
+    "indications": [
+      "Severe asthma",
+      "COPD exacerbation"
+    ],
+    "searchTerms": [
+      "asthma",
+      "copd",
+      "bronchospasm",
+      "wheeze"
+    ],
+    "formulaType": "weight_based",
+    "weightBased": true,
+    "doseUnit": "mg/kg/hr",
+    "doseMin": 0.3,
+    "doseMax": 0.8,
+    "doseStep": 0.1,
+    "dosePoints": null,
+    "allowCustomConcentration": false,
+    "safety": {
+      "highAlert": true,
+      "requiresPump": true,
+      "requiresCVL": false,
+      "peripheralCompatible": true,
+      "requiresCardiacMonitoring": true
+    },
+    "preparations": [
+      {
+        "id": "standard",
+        "label": "Standard Preparation",
+        "isDefault": true,
+        "isHighConcentration": false,
+        "description": "250mg in 50ml Normal Saline",
+        "ampouleStrength": "250mg/10ml",
+        "ampouleCount": 1,
+        "drugAmountMg": 250,
+        "medicationVolumeMl": 10,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 40,
+        "finalVolumeMl": 50,
+        "concentration": 5,
+        "concentrationUnit": "mg/ml",
+        "compatibleDiluents": [
+          "Normal Saline"
+        ],
+        "incompatibleDiluents": [],
+        "preparationSteps": [
+          "Dilute 250 mg in 50 mls syringe with Normal saline",
+          "1 ml = 250 / 50 = 5mg",
+          "1 ml /hr = 5mg /hr"
+        ],
+        "notes": "Loading dose: 5mg/kg in 100mls NS over 1/2 Hour (Run over 20-30 mins)"
+      }
+    ],
+    "administrationGuidance": "Loading dose: 5mg/kg. DO NOT give bolus to patients already on oral theophylline/NEULIN. Maintenance Dose target depends on profile: Non-smoker: 0.5mg/kg/hr. Smoker: 0.8mg/kg/hr. Elderly: 0.3mg/kg/hr. Adjust doseMin/doseMax in calculator based on patient profile.",
+    "importantCautions": [
+      "Do not give bolus to patients already on oral theophylline",
+      "Different maintenance rates for smokers, non-smokers, and elderly",
+      "Monitor for arrhythmias"
+    ],
+    "references": [
+      "Pharmacy Department HPUPM",
+      "Hospital Sultanah Aminah Guidelines For Drug Reconstitution 2013"
+    ],
+    "lastReviewed": "2026-06-02"
+  },
+  {
+    "id": "amiodarone",
+    "name": "Amiodarone",
+    "aliases": [
+      "cordarone"
+    ],
+    "category": "Antiarrhythmic",
+    "indications": [
+      "Ventricular arrhythmias",
+      "Atrial fibrillation"
+    ],
+    "searchTerms": [
+      "arrhythmia",
+      "vt",
+      "vf",
+      "af",
+      "tachycardia"
+    ],
+    "formulaType": "weight_based",
+    "weightBased": true,
+    "doseUnit": "mg/kg",
+    "doseMin": 5,
+    "doseMax": 5,
+    "doseStep": 0,
+    "dosePoints": null,
+    "allowCustomConcentration": false,
+    "safety": {
+      "highAlert": true,
+      "requiresPump": true,
+      "requiresCVL": false,
+      "peripheralCompatible": true,
+      "requiresCardiacMonitoring": true
+    },
+    "preparations": [
+      {
+        "id": "loading",
+        "label": "Loading Dose",
+        "isDefault": true,
+        "isHighConcentration": false,
+        "description": "300mg in 100ml Dextrose 5%",
+        "ampouleStrength": "150mg/3ml",
+        "ampouleCount": 2,
+        "drugAmountMg": 300,
+        "medicationVolumeMl": 6,
+        "diluent": "Dextrose 5%",
+        "diluentVolumeMl": 94,
+        "finalVolumeMl": 100,
+        "concentration": 3,
+        "concentrationUnit": "mg/ml",
+        "compatibleDiluents": [
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Normal Saline"
+        ],
+        "preparationSteps": [
+          "Dilute 2 ampoules of amiodarone (300mg / 6mls) in 100 mls of Dextrose 5%",
+          "Incompatible with Normal Saline",
+          "Use microchamber or infusion pump",
+          "Alternative: Dilute 150 mg in 50 ml D5%, Run @100ml/Hour (Do in 2 syringes) - Run 300mg over 1 hour"
+        ],
+        "notes": "5mg/kg bodyweight infused over 20-120 mins"
+      },
+      {
+        "id": "maintenance",
+        "label": "Maintenance Dose",
+        "isDefault": false,
+        "isHighConcentration": false,
+        "description": "900mg in 500ml Dextrose 5%",
+        "ampouleStrength": "150mg/3ml",
+        "ampouleCount": 6,
+        "drugAmountMg": 900,
+        "medicationVolumeMl": 18,
+        "diluent": "Dextrose 5%",
+        "diluentVolumeMl": 482,
+        "finalVolumeMl": 500,
+        "concentration": 1.8,
+        "concentrationUnit": "mg/ml",
+        "compatibleDiluents": [
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Normal Saline"
+        ],
+        "preparationSteps": [
+          "Dilute 6 ampoules of Amiodarone (900 mg/18mls) in 500mls of Dextrose 5%"
+        ],
+        "notes": "Run over remaining 23 hours —> 22mls/hour. Max maintenance dose 1.2gm in 24 hours"
+      }
+    ],
+    "administrationGuidance": "Requires Loading Dose followed by Maintenance Dose. Calculator support limited (does not support phased dosing natively). Review preparation tabs for phase-specific dilution and rate. Incompatible with Normal Saline.",
+    "importantCautions": [
+      "Incompatible with Normal Saline",
+      "Monitor ECG continuously",
+      "Can cause hypotension or bradycardia"
+    ],
+    "references": [
+      "Pharmacy Department HPUPM",
+      "ICU Sungai Buloh (Alternative dose reference)"
+    ],
+    "lastReviewed": "2026-06-02"
+  },
+  {
+    "id": "dobutamine",
+    "name": "Dobutamine",
+    "aliases": [
+      "dobuta"
+    ],
+    "searchTerms": [
+      "heart failure",
+      "cardiogenic shock",
+      "inotrope"
+    ],
+    "category": "Inotrope",
+    "indications": [
+      "Heart failure",
+      "Cardiogenic shock"
+    ],
+    "formulaType": "weight_based",
+    "weightBased": true,
+    "doseUnit": "mcg/kg/min",
+    "doseMin": 2.5,
+    "doseMax": 20,
+    "doseStep": 2.5,
+    "dosePoints": null,
+    "allowCustomConcentration": false,
+    "safety": {
+      "highAlert": true,
+      "requiresPump": true,
+      "requiresCVL": false,
+      "peripheralCompatible": true,
+      "requiresCardiacMonitoring": true
+    },
+    "preparations": [
+      {
+        "id": "single",
+        "label": "Single Strength",
+        "isDefault": true,
+        "isHighConcentration": false,
+        "description": "250mg in 50ml Normal Saline",
+        "ampouleStrength": "250mg/20ml (12.5mg/ml)",
+        "ampouleCount": 1,
+        "drugAmountMg": 250,
+        "medicationVolumeMl": 20,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 30,
+        "finalVolumeMl": 50,
+        "concentration": 5000,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Normal Saline",
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Alkaline solutions",
+          "Sodium bicarbonate"
+        ],
+        "preparationSteps": [
+          "Draw out 20ml from 1 vial of Dobutamine 12.5mg/ml (250mg total)",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Normal Saline (add approx. 30ml)",
+          "Final volume = 50ml, Concentration = 5000 mcg/ml"
+        ],
+        "notes": "Use the full 20ml from the 250mg vial."
+      }
+    ],
+    "administrationGuidance": "Syringe pump. No bolus doses. Wean gradually.",
+    "importantCautions": [
+      "No bolus doses — infusion only",
+      "Preferable to use single strength in ED",
+      "Do not mix with alkaline solutions or sodium bicarbonate"
+    ],
+    "references": [
+      "Pharmacy Department HPUPM"
     ],
     "lastReviewed": "2026-06-01"
   },
@@ -330,79 +545,101 @@
     "lastReviewed": "2026-06-01"
   },
   {
-    "id": "dobutamine",
-    "name": "Dobutamine",
+    "id": "frusemide",
+    "name": "Frusemide",
     "aliases": [
-      "dobuta"
+      "furosemide",
+      "lasix"
+    ],
+    "category": "Diuretic",
+    "indications": [
+      "Fluid overload",
+      "Heart failure",
+      "Pulmonary edema"
     ],
     "searchTerms": [
+      "fluid",
+      "edema",
       "heart failure",
-      "cardiogenic shock",
-      "inotrope"
+      "diuretic",
+      "urine"
     ],
-    "category": "Inotrope",
-    "indications": [
-      "Heart failure",
-      "Cardiogenic shock"
-    ],
-    "formulaType": "weight_based",
-    "weightBased": true,
-    "doseUnit": "mcg/kg/min",
-    "doseMin": 2.5,
-    "doseMax": 20,
-    "doseStep": 2.5,
+    "formulaType": "fixed_dose",
+    "weightBased": false,
+    "doseUnit": "mg/hr",
+    "doseMin": 10,
+    "doseMax": 40,
+    "doseStep": 5,
     "dosePoints": null,
     "allowCustomConcentration": false,
     "safety": {
-      "highAlert": true,
+      "highAlert": false,
       "requiresPump": true,
       "requiresCVL": false,
       "peripheralCompatible": true,
-      "requiresCardiacMonitoring": true
+      "requiresCardiacMonitoring": false
     },
     "preparations": [
       {
-        "id": "single",
-        "label": "Single Strength",
+        "id": "undiluted",
+        "label": "Undiluted (Syringe)",
         "isDefault": true,
-        "isHighConcentration": false,
-        "description": "250mg in 50ml Normal Saline",
-        "ampouleStrength": "250mg/20ml (12.5mg/ml)",
-        "ampouleCount": 1,
-        "drugAmountMg": 250,
+        "isHighConcentration": true,
+        "description": "200mg undiluted in 20ml syringe",
+        "ampouleStrength": "20mg/2ml",
+        "ampouleCount": 10,
+        "drugAmountMg": 200,
         "medicationVolumeMl": 20,
-        "diluent": "Normal Saline (0.9% NaCl)",
-        "diluentVolumeMl": 30,
-        "finalVolumeMl": 50,
-        "concentration": 5000,
-        "concentrationUnit": "mcg/ml",
-        "compatibleDiluents": [
-          "Normal Saline",
-          "Dextrose 5%"
-        ],
-        "incompatibleDiluents": [
-          "Alkaline solutions",
-          "Sodium bicarbonate"
-        ],
+        "diluent": "None",
+        "diluentVolumeMl": 0,
+        "finalVolumeMl": 20,
+        "concentration": 10,
+        "concentrationUnit": "mg/ml",
+        "compatibleDiluents": [],
+        "incompatibleDiluents": [],
         "preparationSteps": [
-          "Draw out 20ml from 1 vial of Dobutamine 12.5mg/ml (250mg total)",
-          "Add to 50ml syringe",
-          "Make up to 50ml with Normal Saline (add approx. 30ml)",
-          "Final volume = 50ml, Concentration = 5000 mcg/ml"
+          "Draw 200mg (10 amps undiluted) = 20 mls in 20mls syringe",
+          "1 ml/hr = 10mg/hr"
         ],
-        "notes": "Use the full 20ml from the 250mg vial."
+        "notes": "Run at 10-40 mg/h (1- 4 ml/h)"
+      },
+      {
+        "id": "aminolasix",
+        "label": "Frusemide + Aminophylline (AMINOLASIX)",
+        "isDefault": false,
+        "isHighConcentration": false,
+        "description": "120mg Frusemide + 150mg Aminophylline in 50ml NS",
+        "ampouleStrength": "20mg/2ml",
+        "ampouleCount": 6,
+        "drugAmountMg": 120,
+        "medicationVolumeMl": 12,
+        "diluent": "Normal Saline + Aminophylline",
+        "diluentVolumeMl": 38,
+        "finalVolumeMl": 50,
+        "concentration": 2.4,
+        "concentrationUnit": "mg/ml",
+        "compatibleDiluents": [
+          "Normal Saline"
+        ],
+        "incompatibleDiluents": [],
+        "preparationSteps": [
+          "120mg Frusemide + 150mg Aminophylline diluted to 50ml NS (2.4:3 mg/ml)",
+          "Run 10ml/h for first hour then continue at 2 ml/h"
+        ],
+        "notes": "Aminophylline has properties to potentiate the effect of frusemide on kidney. Preparation from ICU Sungai Buloh."
       }
     ],
-    "administrationGuidance": "Syringe pump. No bolus doses. Wean gradually.",
+    "administrationGuidance": "Adult: maximum rate 4mg/min (exceeding this rate increases risk of ototoxicity). Children: maximum rate of 0.5mg/kg/min. Required single dedicated line (preferably CVL) because risk for crystallisation is high when mixed with other infusion.",
     "importantCautions": [
-      "No bolus doses — infusion only",
-      "Preferable to use single strength in ED",
-      "Do not mix with alkaline solutions or sodium bicarbonate"
+      "Exceeding 4mg/min in adults increases risk of ototoxicity",
+      "Requires single dedicated line due to crystallization risk",
+      "Bolus Dose: 20 - 40mg (max 160mg) undiluted IV slow bolus 5-10mins"
     ],
     "references": [
-      "Pharmacy Department HPUPM"
+      "Pharmacy Department HPUPM",
+      "Lexicomp, Wolter Kluwer Clinical Drug Information"
     ],
-    "lastReviewed": "2026-06-01"
+    "lastReviewed": "2026-06-02"
   },
   {
     "id": "gtn",
@@ -520,6 +757,241 @@
     ],
     "references": [
       "Pharmacy Department HPUPM"
+    ],
+    "lastReviewed": "2026-06-01"
+  },
+  {
+    "id": "magnesium_sulphate",
+    "name": "Magnesium Sulphate",
+    "aliases": [
+      "mgso4",
+      "magnesium"
+    ],
+    "category": "Electrolyte / Anticonvulsant",
+    "indications": [
+      "Pre-eclampsia",
+      "Eclampsia",
+      "Severe Asthma",
+      "Tetanus",
+      "Torsades de pointes"
+    ],
+    "searchTerms": [
+      "eclampsia",
+      "seizure",
+      "asthma",
+      "tetanus",
+      "torsades"
+    ],
+    "formulaType": "fixed_dose",
+    "weightBased": false,
+    "doseUnit": "g/hr",
+    "doseMin": 1,
+    "doseMax": 2,
+    "doseStep": 0.5,
+    "dosePoints": null,
+    "allowCustomConcentration": false,
+    "safety": {
+      "highAlert": true,
+      "requiresPump": true,
+      "requiresCVL": false,
+      "peripheralCompatible": true,
+      "requiresCardiacMonitoring": true
+    },
+    "preparations": [
+      {
+        "id": "eclampsia",
+        "label": "Eclampsia Maintenance",
+        "isDefault": true,
+        "isHighConcentration": false,
+        "description": "1gm in 50ml Normal Saline",
+        "ampouleStrength": "2.47g/5ml",
+        "ampouleCount": 1,
+        "drugAmountMg": 1000,
+        "medicationVolumeMl": 2,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 48,
+        "finalVolumeMl": 50,
+        "concentration": 0.02,
+        "concentrationUnit": "g/ml",
+        "compatibleDiluents": [
+          "Normal Saline"
+        ],
+        "incompatibleDiluents": [],
+        "preparationSteps": [
+          "Draw 1gm (2ml) in 50ml N/S",
+          "Run @ 50ml/Hr (1gm/Hr). Continue maintenance @ 1gm/Hr till delivery"
+        ],
+        "notes": "Loading dose: 4gm (8ml) in 20ml N/S run @ 80ml/Hr (over 15 min)"
+      },
+      {
+        "id": "asthma",
+        "label": "Severe Asthma",
+        "isDefault": false,
+        "isHighConcentration": true,
+        "description": "2gm in 20cc Normal Saline",
+        "ampouleStrength": "2.47g/5ml",
+        "ampouleCount": 1,
+        "drugAmountMg": 2000,
+        "medicationVolumeMl": 4,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 16,
+        "finalVolumeMl": 20,
+        "concentration": 0.1,
+        "concentrationUnit": "g/ml",
+        "compatibleDiluents": [
+          "Normal Saline"
+        ],
+        "incompatibleDiluents": [],
+        "preparationSteps": [
+          "Dilute 2 gm (4 mls) in 20cc NS",
+          "Give using syringe pump over 20 minutes (run 60ml/hr)"
+        ],
+        "notes": "For severe asthma bolus"
+      },
+      {
+        "id": "tetanus",
+        "label": "Tetanus Infusion",
+        "isDefault": false,
+        "isHighConcentration": true,
+        "description": "4gm in 20cc Normal Saline",
+        "ampouleStrength": "2.47g/5ml",
+        "ampouleCount": 2,
+        "drugAmountMg": 4000,
+        "medicationVolumeMl": 8,
+        "diluent": "Normal Saline (0.9% NaCl)",
+        "diluentVolumeMl": 12,
+        "finalVolumeMl": 20,
+        "concentration": 0.2,
+        "concentrationUnit": "g/ml",
+        "compatibleDiluents": [
+          "Normal Saline"
+        ],
+        "incompatibleDiluents": [],
+        "preparationSteps": [
+          "Dilute 4 gm (8 mls) in 20cc NS",
+          "Run 10ml/h = 2 grams/h"
+        ],
+        "notes": "Loading bolus: 40mg/kg IV. Maintenance: 2 grams/h (1.5 grams/h if ≤45 kg) to maintain blood level 2.0–4.0 mmol/L"
+      }
+    ],
+    "administrationGuidance": "Highly indication-dependent dosing. Calculator support is limited to general g/hr infusion. Pre-eclampsia: Load 4g over 15min, Maintain 1g/hr. Asthma: 2g over 20min. Tetanus: Load 40mg/kg, Maintain 1.5-2g/hr. Torsades: 2g over 2min, Maintain 1-2g/hr.",
+    "importantCautions": [
+      "Check patellar reflex before & during infusion",
+      "Monitor RR > 16, Urine Output > 25mls/hr for eclampsia",
+      "Verify preparation and dose based on clinical indication!"
+    ],
+    "references": [
+      "Pharmacy Department HPUPM",
+      "Tintinalli 8th edition"
+    ],
+    "lastReviewed": "2026-06-02"
+  },
+  {
+    "id": "noradrenaline",
+    "name": "Noradrenaline",
+    "aliases": [
+      "norad",
+      "nor",
+      "norepi",
+      "norepinephrine"
+    ],
+    "searchTerms": [
+      "shock",
+      "septic shock",
+      "severe hypotension",
+      "pressor",
+      "vasopressor"
+    ],
+    "category": "Vasopressor",
+    "indications": [
+      "Shock",
+      "Severe hypotension",
+      "Septic shock"
+    ],
+    "formulaType": "weight_based",
+    "weightBased": true,
+    "doseUnit": "mcg/kg/min",
+    "doseMin": 0.05,
+    "doseMax": 0.5,
+    "doseStep": 0.05,
+    "dosePoints": null,
+    "allowCustomConcentration": false,
+    "safety": {
+      "highAlert": true,
+      "requiresPump": true,
+      "requiresCVL": false,
+      "peripheralCompatible": true,
+      "requiresCardiacMonitoring": true
+    },
+    "preparations": [
+      {
+        "id": "single",
+        "label": "Single Strength",
+        "isDefault": true,
+        "isHighConcentration": false,
+        "description": "4mg in 50ml Dextrose 5%",
+        "ampouleStrength": "4mg/4ml",
+        "ampouleCount": 1,
+        "drugAmountMg": 4,
+        "medicationVolumeMl": 4,
+        "diluent": "Dextrose 5%",
+        "diluentVolumeMl": 46,
+        "finalVolumeMl": 50,
+        "concentration": 80,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Normal Saline alone — not recommended due to lack of oxidation protection"
+        ],
+        "preparationSteps": [
+          "Draw up 1 ampoule of Noradrenaline 4mg/4ml",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Dextrose 5% (add approx. 46ml)",
+          "Final volume = 50ml, Concentration = 80 mcg/ml"
+        ],
+        "notes": "Recommended ED preparation"
+      },
+      {
+        "id": "double",
+        "label": "Double Strength",
+        "isDefault": false,
+        "isHighConcentration": true,
+        "description": "8mg in 50ml Dextrose 5%",
+        "ampouleStrength": "4mg/4ml",
+        "ampouleCount": 2,
+        "drugAmountMg": 8,
+        "medicationVolumeMl": 8,
+        "diluent": "Dextrose 5%",
+        "diluentVolumeMl": 42,
+        "finalVolumeMl": 50,
+        "concentration": 160,
+        "concentrationUnit": "mcg/ml",
+        "compatibleDiluents": [
+          "Dextrose 5%"
+        ],
+        "incompatibleDiluents": [
+          "Normal Saline alone — not recommended due to lack of oxidation protection"
+        ],
+        "preparationSteps": [
+          "Draw up 2 ampoules of Noradrenaline 4mg/4ml (total 8ml)",
+          "Add to 50ml syringe",
+          "Make up to 50ml with Dextrose 5% (add approx. 42ml)",
+          "Final volume = 50ml, Concentration = 160 mcg/ml"
+        ],
+        "notes": "Use higher concentration only when clinically appropriate and according to local protocol"
+      }
+    ],
+    "administrationGuidance": "Syringe pump. Titrate according to desired haemodynamic response. Wean gradually.",
+    "importantCautions": [
+      "Use dedicated line if possible",
+      "Inspect peripheral line regularly if used peripherally",
+      "Do not use Normal Saline alone as diluent (oxidation risk)"
+    ],
+    "references": [
+      "Pharmacy Department HPUPM",
+      "Product Leaflet"
     ],
     "lastReviewed": "2026-06-01"
   }
