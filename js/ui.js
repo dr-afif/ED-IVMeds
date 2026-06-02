@@ -634,6 +634,7 @@ class UIService {
     openDrugDetail(drug) {
         this.currentDrug = drug;
         window.storageService.addRecent(drug.id);
+        window.pwaInstallService?.incrementDrugViews();
         
         // Select Preparation
         let prep = drug.preparations.find(p => p.isDefault) || drug.preparations[0];

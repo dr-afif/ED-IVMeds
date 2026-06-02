@@ -1,4 +1,4 @@
-const APP_VERSION = 'v2.0.1';
+const APP_VERSION = 'v2.0.2';
 const CACHE_NAME = `ed-iv-meds-${APP_VERSION}`;
 const ASSETS_TO_CACHE = [
   './',
@@ -7,6 +7,7 @@ const ASSETS_TO_CACHE = [
   './js/app.js',
   './js/data.js',
   './js/ui.js',
+  './js/pwa-install.js',
   './js/calculator.js',
   './js/search.js',
   './js/storage.js',

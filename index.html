@@ -37,6 +37,26 @@
 
             <!-- Home Default Content -->
             <div id="home-default-content" class="scroll-content">
+                <section class="home-section install-home-section hidden" id="home-install-section">
+                    <div class="install-promo-card">
+                        <div class="install-promo-copy">
+                            <div class="install-promo-title">Install ED IV Meds</div>
+                            <div class="install-promo-subtitle">Faster launch, offline access, home screen shortcut.</div>
+                        </div>
+                        <div class="install-promo-actions">
+                            <button class="btn-link install-action-btn" id="home-install-btn">Install</button>
+                            <button class="btn-link" id="home-install-later-btn">Later</button>
+                        </div>
+                        <div class="install-instructions hidden" id="home-install-instructions">
+                            <ol>
+                                <li>Tap Share</li>
+                                <li>Tap Add to Home Screen</li>
+                                <li>Tap Add</li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
                 <section class="home-section">
                     <div class="section-header">
                         <h2>QUICK FAVORITES</h2>
@@ -487,6 +507,32 @@
                     </div>
 
                     <div class="section-header" style="margin-top: var(--spacing-lg);">
+                        <h2>APP INSTALLATION</h2>
+                    </div>
+                    <div class="settings-group install-settings-card">
+                        <div id="install-settings-not-installed">
+                            <div class="install-settings-body">
+                                <strong>Install ED IV Meds</strong>
+                                <span>Faster launch, offline access, and a home screen shortcut.</span>
+                            </div>
+                            <button class="settings-btn-row install-settings-btn" id="settings-install-btn">
+                                Install App
+                            </button>
+                            <div class="install-instructions hidden" id="settings-install-instructions">
+                                <ol>
+                                    <li>Tap Share</li>
+                                    <li>Tap Add to Home Screen</li>
+                                    <li>Tap Add</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="install-installed-row hidden" id="install-settings-installed">
+                            <span class="install-checkmark">✓</span>
+                            <strong>ED IV Meds is installed</strong>
+                        </div>
+                    </div>
+
+                    <div class="section-header" style="margin-top: var(--spacing-lg);">
                         <h2>ABOUT</h2>
                     </div>
                     <div class="settings-group about-card">
@@ -652,6 +698,7 @@
     <script src="js/search.js"></script>
     <script src="js/calculator.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/pwa-install.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
