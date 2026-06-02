@@ -52,6 +52,15 @@ class DataService {
         return this.alphabetLetters;
     }
 
+    getLatestDatabaseUpdate() {
+        const dates = this.drugs
+            .map(drug => drug.lastReviewed)
+            .filter(Boolean)
+            .sort();
+
+        return dates.length > 0 ? dates[dates.length - 1] : null;
+    }
+
     getDrugById(id) {
         return this.drugs.find(drug => drug.id === id);
     }

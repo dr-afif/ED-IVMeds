@@ -8,6 +8,7 @@ class UIService {
         this.activeInputTarget = null; // 'weight'
         this.keypadValue = '';
         this.activeCalculatorMode = 'weight_based';
+        this.appVersion = '1.0';
         
         // Bind methods
         this.handleSearch = this.handleSearch.bind(this);
@@ -278,6 +279,7 @@ class UIService {
         } else if (viewName === 'settings') {
             this.settingsView.classList.remove('hidden');
             this.syncWeightDisplay();
+            this.renderAboutMetadata();
         }
         
         this.currentView = viewName;
@@ -330,6 +332,22 @@ class UIService {
         // Recalculate if detail view is active
         if (this.currentView === 'detail' && this.currentDrug) {
             this.renderDoseTable();
+        }
+    }
+
+    renderAboutMetadata() {
+        const appVersionEl = document.getElementById('about-app-version');
+        const dbVersionEl = document.getElementById('about-db-version');
+        const dbUpdatedEl = document.getElementById('about-db-updated');
+
+        if (appVersionEl) appVersionEl.textContent = this.appVersion;
+
+        const latestUpdate = window.dataService.getLatestDatabaseUpdate();
+        if (dbVersionEl) {
+            dbVersionEl.textContent = latestUpdate ? `DB-${latestUpdate.replaceAll('-', '.')}` : 'Not specified';
+        }
+        if (dbUpdatedEl) {
+            dbUpdatedEl.textContent = latestUpdate || 'Not available';
         }
     }
 
