@@ -2,6 +2,9 @@
 class DataService {
     constructor() {
         this.drugs = [];
+        this.sortedDrugs = [];
+        this.alphabeticalGroups = [];
+        this.alphabetLetters = [];
     }
 
     async loadData() {
@@ -11,6 +14,7 @@ class DataService {
                 throw new Error('Failed to load medication data');
             }
             this.drugs = await response.json();
+            this.buildAlphabeticalIndex();
             return this.drugs;
         } catch (error) {
             console.error('Error loading data:', error);
@@ -19,8 +23,33 @@ class DataService {
         }
     }
 
+    buildAlphabeticalIndex() {
+        this.sortedDrugs = [...this.drugs].sort((a, b) => {
+            return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+        });
+
+        const groupMap = new Map();
+        this.sortedDrugs.forEach(drug => {
+            const firstChar = (drug.name || '#').trim().charAt(0).toUpperCase();
+            const letter = firstChar && firstChar.match(/[A-Z]/) ? firstChar : '#';
+            if (!groupMap.has(letter)) groupMap.set(letter, []);
+            groupMap.get(letter).push(drug);
+        });
+
+        this.alphabeticalGroups = Array.from(groupMap, ([letter, drugs]) => ({ letter, drugs }));
+        this.alphabetLetters = this.alphabeticalGroups.map(group => group.letter);
+    }
+
     getAllDrugs() {
         return this.drugs;
+    }
+
+    getAlphabeticalGroups() {
+        return this.alphabeticalGroups;
+    }
+
+    getAlphabetLetters() {
+        return this.alphabetLetters;
     }
 
     getDrugById(id) {

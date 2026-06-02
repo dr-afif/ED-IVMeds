@@ -39,7 +39,7 @@
             <div id="home-default-content" class="scroll-content">
                 <section class="home-section">
                     <div class="section-header">
-                        <h2>QUICK ACTIONS (FAVORITES)</h2>
+                        <h2>QUICK FAVORITES</h2>
                         <button class="btn-link" id="home-see-all-favorites">Edit</button>
                     </div>
                     <div id="quick-actions-container" class="quick-actions-container">
@@ -47,12 +47,17 @@
                     </div>
                 </section>
 
-                <section class="home-section">
+                <section class="home-section index-nav-section">
                     <div class="section-header">
-                        <h2>RECENTLY VIEWED</h2>
-                        <button class="btn-link hidden" id="home-view-all-recents">View all recents</button>
+                        <h2>MEDICATION INDEX</h2>
                     </div>
-                    <div id="recents-list" class="list-container">
+                    <div id="az-nav" class="az-nav" aria-label="Medication index navigation">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <section class="home-section medication-index-section">
+                    <div id="medication-index-list" class="medication-index-list">
                         <!-- Populated by JS -->
                     </div>
                 </section>
@@ -271,24 +276,27 @@
             <div class="scroll-content">
                 <div class="home-section">
                     <div class="section-header">
-                        <h2>YOUR FAVORITES</h2>
+                        <h2>FAVORITE MEDICATIONS</h2>
                     </div>
                     <div id="favorites-list-view" class="list-container">
                         <!-- Populated by JS -->
                     </div>
                     <div id="favorites-empty-state" class="empty-state hidden">
                         <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <h3>No Favorite Medications</h3>
-                        <p>Star medications to pin them here for rapid bedside access.</p>
+                        <h3>No favorites</h3>
+                        <p>Star medications to add them to Favorites.</p>
                     </div>
                 </div>
 
                 <div class="home-section">
                     <div class="section-header">
-                        <h2>ALL MEDICATIONS</h2>
+                        <h2>RECENTLY VIEWED</h2>
                     </div>
-                    <div id="favorites-all-drugs-list" class="list-container">
+                    <div id="favorites-recents-list" class="list-container">
                         <!-- Populated by JS -->
+                    </div>
+                    <div id="favorites-recents-empty-state" class="empty-state compact-empty hidden">
+                        <p>No recently viewed medications.</p>
                     </div>
                 </div>
             </div>
