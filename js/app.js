@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
         try {
-            await navigator.serviceWorker.register('sw.js');
+            await navigator.serviceWorker.register('sw.js', { scope: './' });
             console.log('ServiceWorker registration successful');
         } catch (err) {
             console.log('ServiceWorker registration failed: ', err);
