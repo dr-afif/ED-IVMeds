@@ -378,6 +378,17 @@ button {
     line-height: 1.6;
 }
 
+.install-unavailable-message {
+    padding: 10px 12px;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.22);
+    border-radius: var(--border-radius-sm);
+    color: var(--accent-warning);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    line-height: 1.45;
+}
+
 /* A-Z medication index */
 .az-nav {
     display: flex;
@@ -1305,6 +1316,10 @@ button {
 }
 
 .install-settings-card .install-instructions {
+    margin: 0 16px 16px;
+}
+
+.install-settings-card .install-unavailable-message {
     margin: 0 16px 16px;
 }
 

@@ -21,11 +21,13 @@ class PWAInstallService {
         window.addEventListener('beforeinstallprompt', (event) => {
             event.preventDefault();
             this.deferredPrompt = event;
+            this.log('beforeinstallprompt captured');
             this.refreshUI();
         });
 
         window.addEventListener('appinstalled', () => {
             this.deferredPrompt = null;
+            this.log('appinstalled fired');
             this.refreshUI();
         });
 
@@ -47,8 +49,13 @@ class PWAInstallService {
         return isIOS && isSafari && !this.isInstalled();
     }
 
+    isAndroidChromium() {
+        const ua = window.navigator.userAgent || '';
+        return /Android/i.test(ua) && /(Chrome|Chromium|EdgA|SamsungBrowser)/i.test(ua);
+    }
+
     canOfferInstall() {
-        return !this.isInstalled() && (this.deferredPrompt || this.isIOSManualInstall());
+        return !this.isInstalled() && (this.deferredPrompt || this.isIOSManualInstall() || this.isAndroidChromium());
     }
 
     shouldShowHomePromotion() {
@@ -94,6 +101,7 @@ class PWAInstallService {
 
         if (this.deferredPrompt) {
             this.hideInstructions(source);
+            this.hideUnavailableMessage(source);
             this.deferredPrompt.prompt();
             const choice = await this.deferredPrompt.userChoice;
             this.deferredPrompt = null;
@@ -105,7 +113,22 @@ class PWAInstallService {
             return;
         }
 
-        this.showInstructions(source);
+        if (this.isIOSManualInstall()) {
+            this.hideUnavailableMessage(source);
+            this.showInstructions(source);
+            return;
+        }
+
+        if (this.isAndroidChromium()) {
+            this.hideInstructions(source);
+            this.showUnavailableMessage(source);
+            this.log('install prompt unavailable reason: beforeinstallprompt has not fired yet');
+            return;
+        }
+
+        this.hideInstructions(source);
+        this.showUnavailableMessage(source);
+        this.log('install prompt unavailable reason: unsupported browser or install criteria not met');
     }
 
     incrementDrugViews() {
@@ -132,6 +155,20 @@ class PWAInstallService {
         if (el) el.classList.add('hidden');
     }
 
+    showUnavailableMessage(source) {
+        const el = document.getElementById(`${source}-install-unavailable`);
+        if (el) el.classList.remove('hidden');
+    }
+
+    hideUnavailableMessage(source) {
+        const el = document.getElementById(`${source}-install-unavailable`);
+        if (el) el.classList.add('hidden');
+    }
+
+    log(message) {
+        console.info(`[PWA Install] ${message}`);
+    }
+
     refreshUI() {
         const installed = this.isInstalled();
         const homeSection = document.getElementById('home-install-section');
@@ -150,6 +187,8 @@ class PWAInstallService {
         if (installed) {
             this.hideInstructions('home');
             this.hideInstructions('settings');
+            this.hideUnavailableMessage('home');
+            this.hideUnavailableMessage('settings');
         }
     }
 }

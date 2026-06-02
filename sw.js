@@ -1,4 +1,4 @@
-const APP_VERSION = 'v2.0.2';
+const APP_VERSION = 'v2.0.3';
 const CACHE_NAME = `ed-iv-meds-${APP_VERSION}`;
 const ASSETS_TO_CACHE = [
   './',
@@ -13,6 +13,8 @@ const ASSETS_TO_CACHE = [
   './js/storage.js',
   './data/drugs.json',
   './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
 ];
 
