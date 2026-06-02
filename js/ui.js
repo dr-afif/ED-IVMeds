@@ -358,14 +358,7 @@ class UIService {
                 
                 pill.className = `quick-action-pill ${catClass}`;
                 
-                let abbr = drug.name.substring(0, 4);
-                if (drug.aliases && drug.aliases.length > 0) {
-                    abbr = drug.aliases[0];
-                }
-                abbr = abbr.charAt(0).toUpperCase() + abbr.slice(1);
-
                 pill.innerHTML = `
-                    <div class="quick-action-abbr">${abbr}</div>
                     <div class="quick-action-name">${drug.name}</div>
                 `;
                 pill.addEventListener('click', () => {
@@ -460,6 +453,7 @@ class UIService {
                 <svg class="list-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect></svg>
                 <div class="list-content">
                     <div class="list-title">${drug.name} Calculator</div>
+                    ${drug.aliases && drug.aliases.length > 0 ? `<div class="list-aliases">${drug.aliases.join(', ')}</div>` : ''}
                     <div class="list-subtitle">${drug.weightBased ? 'Weight-Based' : 'Fixed Dose'} (${drug.doseUnit})</div>
                 </div>
                 <div class="list-action">
@@ -508,6 +502,7 @@ class UIService {
             ${iconHtml}
             <div class="list-content">
                 <div class="list-title">${drug.name}</div>
+                ${drug.aliases && drug.aliases.length > 0 ? `<div class="list-aliases">${drug.aliases.join(', ')}</div>` : ''}
                 <div class="list-subtitle">${drug.category}</div>
             </div>
             <div class="list-action">
@@ -551,7 +546,7 @@ class UIService {
                 this.searchResultsList.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--text-muted);">No medications found.</div>';
             } else {
                 results.forEach(res => {
-                    this.searchResultsList.appendChild(this.createListItem(res.drug, 'all'));
+                    this.searchResultsList.appendChild(this.createListItem(res, 'all'));
                 });
             }
         } else {
