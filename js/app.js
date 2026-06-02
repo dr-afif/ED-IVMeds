@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // 4. Initialize UI
     window.uiService.init();
+    window.pwaInstallService.init();
     
     // 5. Initial render
     window.uiService.showView('home');

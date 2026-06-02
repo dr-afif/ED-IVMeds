@@ -314,6 +314,70 @@ button {
     background: var(--bg-surface);
 }
 
+/* PWA Install */
+.install-home-section {
+    padding-bottom: 0;
+}
+
+.install-promo-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+}
+
+.install-promo-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.install-promo-title {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.install-promo-subtitle {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    line-height: 1.35;
+}
+
+.install-promo-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.install-action-btn,
+.install-settings-btn {
+    color: var(--accent-primary);
+    font-weight: 700;
+}
+
+.install-instructions {
+    padding: 10px 12px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius-sm);
+}
+
+.install-instructions ol {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.install-instructions li {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
 /* A-Z medication index */
 .az-nav {
     display: flex;
@@ -1215,6 +1279,50 @@ button {
 
 .settings-btn-row:active {
     background-color: var(--border-light);
+}
+
+.install-settings-card {
+    padding: 0;
+}
+
+.install-settings-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.install-settings-body strong {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+}
+
+.install-settings-body span {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.install-settings-card .install-instructions {
+    margin: 0 16px 16px;
+}
+
+.install-installed-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+}
+
+.install-checkmark {
+    color: var(--accent-secondary);
+    font-weight: 800;
+}
+
+.install-installed-row strong {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
 }
 
 .about-card {
