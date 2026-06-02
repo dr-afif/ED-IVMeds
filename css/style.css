@@ -1217,6 +1217,90 @@ button {
     background-color: var(--border-light);
 }
 
+.about-card {
+    padding: 16px;
+}
+
+.about-intro {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.about-app-name {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.about-version {
+    margin-top: 2px;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.about-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.about-copy p {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.about-copy span {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.about-copy strong {
+    display: block;
+    margin-top: 2px;
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+}
+
+.about-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.about-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: var(--font-size-xs);
+}
+
+.about-meta-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.about-meta-row span {
+    color: var(--text-secondary);
+}
+
+.about-meta-row strong {
+    color: var(--text-primary);
+    font-weight: 700;
+    text-align: right;
+    white-space: nowrap;
+}
+
 .text-danger {
     color: var(--accent-danger) !important;
 }
