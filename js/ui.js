@@ -335,32 +335,25 @@ class UIService {
 
     renderHomeLists() {
         const favs = window.storageService.getFavorites();
-        const recents = window.storageService.getRecents();
-        const allDrugs = window.dataService.getAllDrugs();
-        
-        // Quick Actions — show favorites if any, otherwise show all drugs as defaults
         const quickContainer = document.getElementById('quick-actions-container');
         if (quickContainer) {
             quickContainer.innerHTML = '';
             quickContainer.parentElement.classList.remove('hidden');
-            
-            const pillSources = favs.length > 0
-                ? favs.map(id => window.dataService.getDrugById(id)).filter(Boolean)
-                : allDrugs;
-            
+
+            const pillSources = favs.map(id => window.dataService.getDrugById(id)).filter(Boolean);
+
+            if (pillSources.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'quick-actions-empty';
+                empty.textContent = 'Star medications to add them to Favorites.';
+                quickContainer.appendChild(empty);
+            }
+
             pillSources.forEach(drug => {
                 const pill = document.createElement('div');
-                let catClass = '';
-                const catLower = drug.category.toLowerCase();
-                if (catLower.includes('vasopressor')) catClass = 'cat-vasopressor';
-                else if (catLower.includes('inotrope')) catClass = 'cat-inotrope';
-                else if (catLower.includes('vasodilator')) catClass = 'cat-vasodilator';
-                
+                const catClass = this.getCategoryClass(drug.category);
                 pill.className = `quick-action-pill ${catClass}`;
-                
-                pill.innerHTML = `
-                    <div class="quick-action-name">${drug.name}</div>
-                `;
+                pill.innerHTML = `<div class="quick-action-name">${this.escapeHtml(drug.name)}</div>`;
                 pill.addEventListener('click', () => {
                     this.vibrate();
                     this.openDrugDetail(drug);
@@ -369,33 +362,74 @@ class UIService {
             });
         }
 
-        // Recents
-        const recentsList = document.getElementById('recents-list');
-        if (recentsList) {
-            recentsList.innerHTML = '';
-            if (recents.length === 0) {
-                recentsList.parentElement.classList.add('hidden');
-            } else {
-                recentsList.parentElement.classList.remove('hidden');
-                recents.forEach(id => {
-                    const drug = window.dataService.getDrugById(id);
-                    if (drug) {
-                        const li = this.createListItem(drug, 'recent');
-                        recentsList.appendChild(li);
-                    }
-                });
-            }
-        }
+        this.renderAlphabetNav();
+        this.renderMedicationIndex();
     }
+
+    renderAlphabetNav() {
+        const nav = document.getElementById('az-nav');
+        if (!nav) return;
+
+        nav.innerHTML = '';
+        const fragment = document.createDocumentFragment();
+
+        window.dataService.getAlphabetLetters().forEach(letter => {
+            const button = document.createElement('button');
+            button.className = 'az-nav-btn';
+            button.type = 'button';
+            button.textContent = letter;
+            button.setAttribute('aria-label', `Jump to ${letter}`);
+            button.addEventListener('click', () => {
+                this.vibrate();
+                const target = document.getElementById(`med-index-${letter}`);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+            fragment.appendChild(button);
+        });
+
+        nav.appendChild(fragment);
+    }
+
+    renderMedicationIndex() {
+        const container = document.getElementById('medication-index-list');
+        if (!container) return;
+
+        container.innerHTML = '';
+        const fragment = document.createDocumentFragment();
+
+        window.dataService.getAlphabeticalGroups().forEach(group => {
+            const section = document.createElement('section');
+            section.className = 'medication-letter-card';
+            section.id = `med-index-${group.letter}`;
+
+            const heading = document.createElement('h3');
+            heading.className = 'medication-letter-heading';
+            heading.textContent = group.letter;
+            section.appendChild(heading);
+
+            const list = document.createElement('div');
+            list.className = 'list-container';
+            group.drugs.forEach(drug => {
+                list.appendChild(this.createListItem(drug, 'index'));
+            });
+            section.appendChild(list);
+            fragment.appendChild(section);
+        });
+
+        container.appendChild(fragment);
+    }
+
 
     renderFavoritesViewList() {
         const favs = window.storageService.getFavorites();
+        const recents = window.storageService.getRecents();
         const container = document.getElementById('favorites-list-view');
         const emptyState = document.getElementById('favorites-empty-state');
-        const allDrugsContainer = document.getElementById('favorites-all-drugs-list');
-        
+        const recentsContainer = document.getElementById('favorites-recents-list');
+        const recentsEmptyState = document.getElementById('favorites-recents-empty-state');
+
         container.innerHTML = '';
-        if (allDrugsContainer) allDrugsContainer.innerHTML = '';
+        if (recentsContainer) recentsContainer.innerHTML = '';
 
         if (favs.length === 0) {
             container.classList.add('hidden');
@@ -403,7 +437,7 @@ class UIService {
         } else {
             container.classList.remove('hidden');
             emptyState.classList.add('hidden');
-            
+
             favs.forEach(id => {
                 const drug = window.dataService.getDrugById(id);
                 if (drug) {
@@ -420,26 +454,23 @@ class UIService {
             });
         }
 
-        // Render all medications that are not favorited
-        if (allDrugsContainer) {
-            const allDrugs = window.dataService.getAllDrugs();
-            const unfavorited = allDrugs.filter(d => !favs.includes(d.id));
-            
-            if (unfavorited.length === 0) {
-                const p = document.createElement('p');
-                p.textContent = "All medications have been favorited.";
-                p.style.fontSize = '12px';
-                p.style.color = 'var(--text-muted)';
-                p.style.padding = '0 16px';
-                allDrugsContainer.appendChild(p);
+        if (recentsContainer && recentsEmptyState) {
+            const recentDrugs = recents.map(id => window.dataService.getDrugById(id)).filter(Boolean);
+            if (recentDrugs.length === 0) {
+                recentsContainer.classList.add('hidden');
+                recentsEmptyState.classList.remove('hidden');
             } else {
-                unfavorited.forEach(drug => {
-                    const li = this.createListItem(drug, 'favorite-view-item');
-                    allDrugsContainer.appendChild(li);
+                recentsContainer.classList.remove('hidden');
+                recentsEmptyState.classList.add('hidden');
+                const fragment = document.createDocumentFragment();
+                recentDrugs.forEach(drug => {
+                    fragment.appendChild(this.createListItem(drug, 'recent'));
                 });
+                recentsContainer.appendChild(fragment);
             }
         }
     }
+
 
     renderCalculatorsViewList() {
         const list = document.getElementById('calculators-list');
@@ -479,37 +510,37 @@ class UIService {
 
     createListItem(drug, type) {
         const div = document.createElement('div');
-        div.className = 'list-item';
-        
-        let iconHtml = '';
-        if (type === 'recent') {
-            iconHtml = `<svg class="list-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
-        } else {
-            iconHtml = `<svg class="list-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>`;
-        }
-        
+        div.className = 'list-item drug-list-item';
+
         const isFav = window.storageService.isFavorite(drug.id);
         const starFill = isFav ? 'var(--accent-warning)' : 'none';
         const starColor = isFav ? 'var(--accent-warning)' : 'var(--text-muted)';
-        
-        const actionHtml = `<button class="icon-btn fav-toggle-btn" style="padding: 4px;" aria-label="Toggle favorite">
+        const aliasesHtml = this.createChipHtml(drug.aliases, 'alias-chip', 4);
+        const indicationsHtml = this.createChipHtml(drug.indications, 'indication-chip', 2);
+        const categoryClass = this.getCategoryClass(drug.category);
+
+        const actionHtml = `<button class="icon-btn fav-toggle-btn" aria-label="Toggle favorite">
             <svg viewBox="0 0 24 24" fill="${starFill}" stroke="${starColor}" stroke-width="2" width="20" height="20">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
             </svg>
         </button>`;
 
         div.innerHTML = `
-            ${iconHtml}
             <div class="list-content">
-                <div class="list-title">${drug.name}</div>
-                ${drug.aliases && drug.aliases.length > 0 ? `<div class="list-aliases">${drug.aliases.join(', ')}</div>` : ''}
-                <div class="list-subtitle">${drug.category}</div>
+                <div class="list-title-row">
+                    <div class="list-title">${this.escapeHtml(drug.name)}</div>
+                </div>
+                <div class="chip-row">
+                    <span class="meta-chip category-chip ${categoryClass}">${this.escapeHtml(drug.category)}</span>
+                    ${aliasesHtml}
+                    ${indicationsHtml}
+                </div>
             </div>
             <div class="list-action">
                 ${actionHtml}
             </div>
         `;
-        
+
         div.addEventListener('click', (e) => {
             if (e.target.closest('.fav-toggle-btn')) {
                 e.stopPropagation();
@@ -517,7 +548,6 @@ class UIService {
                 window.storageService.toggleFavorite(drug.id);
                 this.renderFavoritesViewList();
                 this.renderHomeLists();
-                // Also update the search results if we are currently searching
                 if (this.searchInput.value.trim() !== '') {
                     this.handleSearch({ target: this.searchInput });
                 }
@@ -528,9 +558,36 @@ class UIService {
             this.clearSearchBtn.classList.add('hidden');
             this.openDrugDetail(drug);
         });
-        
+
         return div;
     }
+
+    createChipHtml(items, className, limit) {
+        if (!items || items.length === 0) return '';
+        return items.slice(0, limit).map(item => {
+            return `<span class="meta-chip ${className}">${this.escapeHtml(item)}</span>`;
+        }).join('');
+    }
+
+    getCategoryClass(category = '') {
+        const catLower = category.toLowerCase();
+        if (catLower.includes('vasopressor')) return 'cat-vasopressor';
+        if (catLower.includes('inotrope')) return 'cat-inotrope';
+        if (catLower.includes('vasodilator')) return 'cat-vasodilator';
+        if (catLower.includes('insulin')) return 'cat-insulin';
+        return 'cat-default';
+    }
+
+    escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        }[char]));
+    }
+
 
     handleSearch(e) {
         const query = e.target.value;
